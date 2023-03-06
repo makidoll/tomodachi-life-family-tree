@@ -39,7 +39,7 @@ export default function App() {
 		<Graphviz
 			dot={graphvizDot}
 			options={{
-				zoom: false,
+				zoom: true,
 				width: "100vw",
 				height: "100vh",
 				images: graphvizImages,
