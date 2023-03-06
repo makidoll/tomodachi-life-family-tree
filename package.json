@@ -4,7 +4,8 @@
 	"private": true,
 	"source": "src/index.html",
 	"scripts": {
-		"start": "parcel"
+		"start": "parcel",
+		"build": "parcel build"
 	},
 	"dependencies": {
 		"@chakra-ui/react": "^2.5.1",
