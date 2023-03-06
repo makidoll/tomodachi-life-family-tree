@@ -6,7 +6,10 @@ export class GraphvizFamilyTree {
 	public static Generate(miis: Mii[]) {
 		let graphviz = "digraph G {\n\n";
 
+		// TODO: seperate unconnected nodes further apart
+
 		graphviz += "rankdir = TB;\n";
+		graphviz += 'graph [pad="1"];\n';
 		graphviz += "edge [dir=none,penwidth=2];\n";
 		// graphviz += "graph [splines=ortho];\n";
 		graphviz +=
