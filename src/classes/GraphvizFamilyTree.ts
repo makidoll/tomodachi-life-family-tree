@@ -1,5 +1,8 @@
 import { Mii } from "./SaveFileReader";
 
+export const heartIconSvgDataUri =
+	"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgNjQgOTYwIDk2MCIgZmlsbD0iI0Y0NDMzNiI+PHBhdGggZD0ibTQ4MCA5MzUtNDEtMzdxLTEwNi05Ny0xNzUtMTY3LjV0LTExMC0xMjZRMTEzIDU0OSA5Ni41IDUwNFQ4MCA0MTNxMC05MCA2MC41LTE1MC41VDI5MCAyMDJxNTcgMCAxMDUuNSAyN3Q4NC41IDc4cTQyLTU0IDg5LTc5LjVUNjcwIDIwMnE4OSAwIDE0OS41IDYwLjVUODgwIDQxM3EwIDQ2LTE2LjUgOTFUODA2IDYwNC41cS00MSA1NS41LTExMCAxMjZUNTIxIDg5OGwtNDEgMzd6Ii8+PC9zdmc+";
+
 export class GraphvizFamilyTree {
 	constructor() {}
 
@@ -51,7 +54,7 @@ export class GraphvizFamilyTree {
 					continue;
 				}
 
-				graphviz += `mii${mii.index}mii${mii.spouse.index}couple [label="",height=0.01,width=0.01,color="#F44336",shape=point];\n`;
+				graphviz += `mii${mii.index}mii${mii.spouse.index}couple [label="",height=0.25,width=0.25,color="#F44336",shape=circle,penwidth="2",image="${heartIconSvgDataUri}"];\n`;
 
 				graphviz += `mii${mii.index} -> mii${mii.index}mii${mii.spouse.index}couple -> mii${mii.spouse.index} [color="#F44336"];\n`;
 

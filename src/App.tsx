@@ -1,6 +1,9 @@
 import Graphviz from "./ui/Graphviz";
 import { useCallback, useState } from "react";
-import { GraphvizFamilyTree } from "./classes/GraphvizFamilyTree";
+import {
+	GraphvizFamilyTree,
+	heartIconSvgDataUri,
+} from "./classes/GraphvizFamilyTree";
 import { Region, SaveFileReader } from "./classes/SaveFileReader";
 import DragAndDropFile from "./ui/DragAndDropFile";
 
@@ -19,13 +22,18 @@ export default function App() {
 
 		const miis = await saveFileReader.GetMiiData();
 
-		setGraphvizImages(
-			miis.map(mii => ({
+		setGraphvizImages([
+			{
+				path: heartIconSvgDataUri,
+				width: "16px",
+				height: "16px",
+			},
+			...miis.map(mii => ({
 				path: mii.miiImageUrl,
 				width: "128px",
 				height: "128px",
 			})),
-		);
+		]);
 
 		const graphvizDot = GraphvizFamilyTree.Generate(miis);
 		console.log(graphvizDot);
