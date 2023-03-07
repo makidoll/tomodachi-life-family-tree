@@ -51,7 +51,7 @@ export default function DragAndDropFile(props: {
 					margin={8}
 					flexDir="column"
 					background={isDragActive ? "#eee" : "transparent"}
-					cursor="pointer"
+					cursor={props.loading ? "auto" : "pointer"}
 				>
 					{props.loading ? (
 						<></>
@@ -62,38 +62,36 @@ export default function DragAndDropFile(props: {
 							style={{ marginBottom: 8 }}
 						/>
 					)}
-					<Text
-						fontSize={"xl"}
-						fontWeight={500}
-						lineHeight={"1.6rem"}
-					>
-						{props.loading ? (
-							<>
-								<Spinner
-									thickness="4px"
-									speed="0.65s"
-									emptyColor="gray.100"
-									color="#e91e63"
-									size="xl"
-									marginBottom={4}
-								/>
-								<br />
-								<chakra.span fontWeight={500} fontSize={"md"}>
-									Loading save file...
-								</chakra.span>
-							</>
-						) : (
-							<>
-								Drag and drop file
-								<br />
-								or{" "}
-								<chakra.span color="#e91e63">
-									click to browse
-								</chakra.span>
-								<br />
-							</>
-						)}
-					</Text>
+					{props.loading ? (
+						<>
+							<Spinner
+								thickness="4px"
+								speed="0.65s"
+								emptyColor="gray.100"
+								color="#e91e63"
+								size="xl"
+								marginBottom={4}
+							/>
+							<br />
+							<Text fontWeight={500} fontSize={"md"}>
+								Loading save file...
+							</Text>
+						</>
+					) : (
+						<Text
+							fontSize={"xl"}
+							fontWeight={500}
+							lineHeight={"1.6rem"}
+						>
+							Drag and drop file
+							<br />
+							or{" "}
+							<chakra.span color="#e91e63">
+								click to browse
+							</chakra.span>
+							<br />
+						</Text>
+					)}
 				</Box>
 			</Box>
 		</Box>
