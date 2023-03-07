@@ -4,7 +4,7 @@ export class GraphvizFamilyTree {
 	constructor() {}
 
 	public static Generate(miis: Mii[]) {
-		let graphviz = "digraph G {\n\n";
+		let graphviz = 'digraph "" {\n\n';
 
 		// TODO: seperate unconnected nodes further apart
 
@@ -19,9 +19,7 @@ export class GraphvizFamilyTree {
 
 		// add all miis
 
-		for (let miiIndex = 0; miiIndex < miis.length; miiIndex++) {
-			const mii = miis[miiIndex];
-
+		for (const mii of miis) {
 			if (
 				mii.spouse == null &&
 				mii.mother == null &&
@@ -31,7 +29,7 @@ export class GraphvizFamilyTree {
 				continue;
 			}
 
-			graphviz += `mii${miiIndex} [label="${mii.nickname}",image="${mii.miiImageUrl}"];\n`;
+			graphviz += `mii${mii.index} [label="${mii.nickname}",image="${mii.miiImageUrl}"];\n`;
 		}
 
 		graphviz += "\n";
@@ -47,9 +45,7 @@ export class GraphvizFamilyTree {
 					(couple[0] == i1 && couple[1] == i0),
 			);
 
-		for (let miiIndex = 0; miiIndex < miis.length; miiIndex++) {
-			const mii = miis[miiIndex];
-
+		for (const mii of miis) {
 			if (mii.spouse != null) {
 				if (IsCoupleAdded(mii.index, mii.spouse.index)) {
 					continue;
@@ -75,9 +71,7 @@ export class GraphvizFamilyTree {
 
 		// add all children
 
-		for (let miiIndex = 0; miiIndex < miis.length; miiIndex++) {
-			const mii = miis[miiIndex];
-
+		for (const mii of miis) {
 			// TODO: can mothers and fathers die????
 			if (mii.mother == null || mii.father == null) {
 				continue;

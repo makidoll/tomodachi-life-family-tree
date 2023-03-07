@@ -217,30 +217,22 @@ export class SaveFileReader {
 			mii.relationships = mii.relationships.slice(0, miis.length);
 		}
 
-		// find spouses and ex spouses
+		// find spouses
 
 		const S00 = Relationship.Spouse;
 		const S01 = Relationship.SpouseInConflict;
 		const S02 = Relationship.SpouseRaisingChild;
 		const ExS = Relationship.ExSpouse;
 
-		for (var miiIndex = 0; miiIndex < miis.length; miiIndex++) {
-			const mii = miis[miiIndex];
-
-			for (
-				var queryMiiIndex = 0;
-				queryMiiIndex < miis.length;
-				queryMiiIndex++
-			) {
-				const queryMii = miis[queryMiiIndex];
-
+		for (const mii of miis) {
+			for (const queryMii of miis) {
 				if (
-					(mii.relationships[queryMiiIndex] == S00 &&
-						queryMii.relationships[miiIndex] == S00) ||
-					(mii.relationships[queryMiiIndex] == S01 &&
-						queryMii.relationships[miiIndex] == S01) ||
-					(mii.relationships[queryMiiIndex] == S02 &&
-						queryMii.relationships[miiIndex] == S02)
+					(mii.relationships[queryMii.index] == S00 &&
+						queryMii.relationships[mii.index] == S00) ||
+					(mii.relationships[queryMii.index] == S01 &&
+						queryMii.relationships[mii.index] == S01) ||
+					(mii.relationships[queryMii.index] == S02 &&
+						queryMii.relationships[mii.index] == S02)
 				) {
 					mii.spouse = queryMii;
 					queryMii.spouse = mii;
@@ -251,7 +243,7 @@ export class SaveFileReader {
 		// find parents
 
 		// father is male
-		// father => mother (spouse, in conflict or ex spouse)
+		// father => mother (spouse, in conflict, raising or ex spouse)
 		// father => child (parent/child)
 		//
 		// mother is female
@@ -261,51 +253,37 @@ export class SaveFileReader {
 		// child => father (parent/child)
 		// child => mother (parent/child)
 
-		for (var childIndex = 0; childIndex < miis.length; childIndex++) {
-			const child = miis[childIndex];
-
-			for (
-				var fatherIndex = 0;
-				fatherIndex < miis.length;
-				fatherIndex++
-			) {
-				const father = miis[fatherIndex];
-
-				for (
-					var motherIndex = 0;
-					motherIndex < miis.length;
-					motherIndex++
-				) {
-					const mother = miis[motherIndex];
-
+		for (const child of miis) {
+			for (const father of miis) {
+				for (const mother of miis) {
 					if (
 						// father
 						father.gender == Gender.Male &&
-						(father.relationships[motherIndex] == S00 ||
-							father.relationships[motherIndex] == S01 ||
-							father.relationships[motherIndex] == S02 ||
-							father.relationships[motherIndex] == ExS) &&
-						father.relationships[childIndex] ==
+						(father.relationships[mother.index] == S00 ||
+							father.relationships[mother.index] == S01 ||
+							father.relationships[mother.index] == S02 ||
+							father.relationships[mother.index] == ExS) &&
+						father.relationships[child.index] ==
 							Relationship.ParentChild &&
 						// mother
 						mother.gender == Gender.Female &&
-						(mother.relationships[fatherIndex] == S00 ||
-							mother.relationships[fatherIndex] == S01 ||
-							mother.relationships[fatherIndex] == S02 ||
-							mother.relationships[fatherIndex] == ExS) &&
-						mother.relationships[childIndex] ==
+						(mother.relationships[father.index] == S00 ||
+							mother.relationships[father.index] == S01 ||
+							mother.relationships[father.index] == S02 ||
+							mother.relationships[father.index] == ExS) &&
+						mother.relationships[child.index] ==
 							Relationship.ParentChild &&
 						// child
-						child.relationships[fatherIndex] ==
+						child.relationships[father.index] ==
 							Relationship.ParentChild &&
-						child.relationships[motherIndex] ==
+						child.relationships[mother.index] ==
 							Relationship.ParentChild
 					) {
 						child.mother = mother;
 						child.father = father;
 
-						mother.children.push(child);
-						father.children.push(child);
+						mother.AddChild(child);
+						father.AddChild(child);
 					}
 				}
 			}
